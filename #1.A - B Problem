@@ -1,8 +1,50 @@
 #include <cstdio>
+#include <cstring>
+
+struct BigNum{
+    static const int MAXN = 10009;
+    int numb[MAXN];
+    int top;
+
+    BigNum(int n = 0){
+        top = -1;
+        memset(numb, 0, sizeof(numb));
+        while(n){
+            numb[++top] = n % 10;
+            n /= 10;
+        }
+    }
+
+    BigNum operator *= (const int n){
+        for(int i = 0;i <= top;++i){
+            numb[i] *= n;
+        }
+        for(int i = 0;i <= top;++i){
+            numb[i + 1] += numb[i] / 10;
+            numb[i] %= 10;
+        }
+        while(numb[top + 1]){
+            ++top;
+            numb[top + 1] += numb[top] / 10;
+            numb[top] %= 10;
+        }
+        return *this;
+    }
+
+    void print(){
+        for(int i = top;i >= 0;--i){
+            printf("%d", numb[i]);
+        }
+        putchar('\n');
+        return ;
+    }
+};
 
 int main(){
-	int a, b;
-	scanf("%d %d", &a, &b);
-	printf("%d\n", a - b);
+	int n;
+	scanf("%d", &n);
+	BigNum s(1);
+	for(int i = 1;i <= n;++i) s *= i;
+    s.print();
 	return 0;
 }
