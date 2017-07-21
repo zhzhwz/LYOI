@@ -45,6 +45,6 @@ int main(){
 	scanf("%d", &n);
 	BigNum s(1);
 	for(int i = 1;i <= n;++i) s *= i;
-    s.print();
+	s.print();
 	return 0;
 }
